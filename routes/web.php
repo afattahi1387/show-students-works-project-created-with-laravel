@@ -19,6 +19,6 @@ Route::get('/login', function() {
     }
 
     return view('auth.login');
-});
+})->name('login');
 
 Route::get('/', 'MainController@home')->name('home');
