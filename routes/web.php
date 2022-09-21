@@ -23,4 +23,8 @@ Route::get('/login', function() {
 
 Route::get('/', 'MainController@home')->name('home');
 
-Route::post('/create-lesson-subject', 'MainController@create_lesson_subject')->name('create-lesson-subject');
+Route::prefix('panel')->group(function() {
+    Route::post('/create-lesson-subject', 'MainController@create_lesson_subject')->name('create-lesson-subject');
+
+    Route::delete('/delete-lesson-subject/{subject}', 'MainController@delete_lesson_subject')->name('delete.lesson.subject');
+});

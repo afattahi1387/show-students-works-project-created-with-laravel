@@ -24,4 +24,9 @@ class MainController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function delete_lesson_subject(LessonSubject $subject) {
+        $subject->delete();
+        return redirect()->route('home');
+    }
 }

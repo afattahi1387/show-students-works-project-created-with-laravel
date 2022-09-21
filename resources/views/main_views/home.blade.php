@@ -57,7 +57,15 @@
                                     <tr>
                                         <td>@php echo ++$counter; @endphp</td>
                                         <td>{{ $lesson_subject->subject_name }}</td>
-                                        <td>amaliat</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <form action="{{ route('delete.lesson.subject', ['subject' => $lesson_subject->id]) }}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    <button class="btn btn-danger" onclick="if(confirm('آیا از حذف این موضوع درس مطمئن هستید؟')){return true;}else{return false;}">حذف</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
