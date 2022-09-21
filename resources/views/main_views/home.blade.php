@@ -5,6 +5,9 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">داشبورد</h1><br>
+                @foreach($flashed_messages as $message_type => $message_text)
+                    <div class="alert alert-{{ $message_type }}" style="direction: rtl;">{{ $message_text }}</div>
+                @endforeach
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
