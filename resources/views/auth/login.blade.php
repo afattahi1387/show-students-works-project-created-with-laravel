@@ -23,12 +23,21 @@
                                     <div class="card-body">
                                         <form action="/login" method="POST">
                                             {{ csrf_field() }}
+
+                                            @if($errors->has('username'))
+                                                <div class="alert alert-danger">{{ $errors->first('username') }}</div>
+                                            @endif
+
+                                            @if($errors->has('password'))
+                                                <div class="alert alert-danger">{{ $errors->first('password') }}</div>
+                                            @endif
+                                            
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="username" name="username" type="text" placeholder="نام کاربری" />
+                                                <input class="form-control" id="username" name="username" type="text" placeholder="نام کاربری" value="{{ old('username') }}" />
                                                 <label for="username">نام کاربری</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="password" name="password" type="password" placeholder="رمز عبور" />
+                                                <input class="form-control" id="password" name="password" type="password" placeholder="رمز عبور" value="{{ old('password') }}" />
                                                 <label for="password">رمز عبور</label>
                                             </div>
                                             <div class="form-check mb-3">
