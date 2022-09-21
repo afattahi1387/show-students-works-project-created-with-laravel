@@ -21,7 +21,17 @@
                                 <i class="fas fa-plus"></i>
                                 افزودن موضوع درس
                             </div>
-                            <div class="card-body"></div>
+                            <div class="card-body" style="direction: rtl;">
+                                @if(isset($_GET['edit-lesson-subject']) && !empty($_GET['edit-lesson-subject']))
+                                    <div class="text-danger">فرم افزودن موضوع درس غیرفعال است؛ چون صفحه در وضعیت ویرایش موضوع درس قرار دارد.</div>
+                                @else
+                                    <form action="{{ route('create-lesson-subject') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="text" name="subject_name" placeholder="عنوان موضوع درس" class="form-control"><br>
+                                        <input type="submit" value="افزودن" class="btn btn-success">
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

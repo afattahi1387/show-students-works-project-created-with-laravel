@@ -22,3 +22,5 @@ Route::get('/login', function() {
 })->name('login');
 
 Route::get('/', 'MainController@home')->name('home');
+
+Route::post('/create-lesson-subject', 'MainController@create_lesson_subject')->name('create-lesson-subject');

@@ -12,7 +12,8 @@ return [
 
     'attributes' => [
         'email' => 'ایمیل',
-        'password' => 'رمز عبور'
+        'password' => 'رمز عبور',
+        'subject_name' => 'عنوان موضوع درس'
     ],
 
 ];
