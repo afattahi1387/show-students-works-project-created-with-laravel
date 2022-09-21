@@ -29,4 +29,6 @@ Route::prefix('panel')->group(function() {
     Route::delete('/delete-lesson-subject/{subject}', 'MainController@delete_lesson_subject')->name('delete.lesson.subject');
 
     Route::put('/update-lesson-subject/{subject}', 'MainController@update_lesson_subject')->name('update.lesson.subject');
+
+    Route::get('/students', 'MainController@students')->name('dashboard.students');
 });

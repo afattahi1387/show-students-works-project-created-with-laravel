@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddAndEditLessonSubjectRequest;
 use App\LessonSubject;
+use App\User;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -61,5 +62,10 @@ class MainController extends Controller
 
         self::set_flash_message('success', 'موضوع درس مورد نظر شما با نام ' . $old_subject_name . ' با موفقیت ویرایش و تبدیل به ' . $request->subject_name . ' شد.');
         return redirect()->route('home');
+    }
+
+    public function students() {
+        $students = User::where('type', 'user')->orderBy('id', 'DESC')->get();
+        return view('main_views.students', ['students' => $students, 'flashed_messages' => self::get_flashed_messages()]);
     }
 }
