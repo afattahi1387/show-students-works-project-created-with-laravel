@@ -12,7 +12,18 @@
                                 <i class="fas fa-edit"></i>
                                 ویرایش موضوع درس
                             </div>
-                            <div class="card-body"></div>
+                            <div class="card-body" style="direction: rtl;">
+                                @if(isset($_GET['edit-lesson-subject']) && !empty($_GET['edit-lesson-subject']))
+                                    <form action="{{ route('update.lesson.subject', ['subject' => $_GET['edit-lesson-subject']]) }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="_method" value="put">
+                                        <input type="text" name="subject_name" placeholder="عنوان موضوع درس" value="{{ $edit_form_subject_name }}" class="form-control"><br>
+                                        <input type="submit" value="ویرایش" class="btn btn-warning" style="color: white;">
+                                    </form>
+                                @else
+                                    <span class="text-danger">فرم ویرایش موضوع درس غیرفعال است؛ برای ویرایش موضوع درس، روی دکمه ویرایش در جدول زیر کلیک کنید.</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -23,7 +34,7 @@
                             </div>
                             <div class="card-body" style="direction: rtl;">
                                 @if(isset($_GET['edit-lesson-subject']) && !empty($_GET['edit-lesson-subject']))
-                                    <div class="text-danger">فرم افزودن موضوع درس غیرفعال است؛ چون صفحه در وضعیت ویرایش موضوع درس قرار دارد.</div>
+                                    <span class="text-danger">فرم افزودن موضوع درس غیرفعال است؛ چون صفحه در وضعیت ویرایش موضوع درس قرار دارد.</span>
                                 @else
                                     <form action="{{ route('create-lesson-subject') }}" method="POST">
                                         {{ csrf_field() }}
@@ -59,6 +70,7 @@
                                         <td>{{ $lesson_subject->subject_name }}</td>
                                         <td>
                                             <div class="d-flex">
+                                                <a href="{{ route('home') }}?edit-lesson-subject={{ $lesson_subject->id }}" class="btn btn-warning" style="color: white; margin-right: 3px;">ویرایش</a>
                                                 <form action="{{ route('delete.lesson.subject', ['subject' => $lesson_subject->id]) }}" method="POST">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="_method" value="delete">
