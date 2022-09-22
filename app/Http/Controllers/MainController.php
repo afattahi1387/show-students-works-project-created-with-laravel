@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddAndEditLessonSubjectRequest;
-use App\LessonSubject;
 use App\User;
+use App\LessonSubject;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddAndEditLessonSubjectRequest;
 
 class MainController extends Controller
 {
@@ -67,5 +67,10 @@ class MainController extends Controller
     public function students() {
         $students = User::where('type', 'user')->orderBy('id', 'DESC')->get();
         return view('main_views.students', ['students' => $students, 'flashed_messages' => self::get_flashed_messages()]);
+    }
+
+    public function show_works(User $student) {
+        $works = $student->works;
+        return view('main_views.show_works', ['student' => $student, 'works' => $works, 'flashed_messages' => self::get_flashed_messages()]);
     }
 }

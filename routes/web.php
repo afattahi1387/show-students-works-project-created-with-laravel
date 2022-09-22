@@ -31,4 +31,6 @@ Route::prefix('panel')->group(function() {
     Route::put('/update-lesson-subject/{subject}', 'MainController@update_lesson_subject')->name('update.lesson.subject');
 
     Route::get('/students', 'MainController@students')->name('dashboard.students');
+
+    Route::get('/show-works/{student}', 'MainController@show_works')->name('show.works');
 });
