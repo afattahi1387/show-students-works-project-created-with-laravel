@@ -14,6 +14,7 @@ return [
         'email' => 'ایمیل',
         'password' => 'رمز عبور',
         'subject_name' => 'عنوان موضوع درس',
+        'lesson_subject_id' => 'موضوع درس',
         'score' => 'نمره',
         'year' => 'سال',
         'month' => 'ماه',
