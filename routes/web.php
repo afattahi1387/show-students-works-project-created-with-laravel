@@ -15,11 +15,19 @@ Auth::routes();
 
 Route::get('/login', function() {
     if(auth()->check()) {
-        return redirect()->route('home');
+        return redirect()->route('redirect.to.dashboard');
     }
 
     return view('auth.login');
 })->name('login');
+
+Route::get('/redirect-to-dashboard', function() {
+    if(auth()->user()->type == 'admin') {
+        return redirect()->route('home');
+    } else {
+        return redirect()->route('users.dashboard');
+    }
+})->middleware('auth')->name('redirect.to.dashboard');
 
 Route::get('/', 'MainController@home')->name('home');
 
@@ -37,4 +45,8 @@ Route::prefix('panel')->group(function() {
     Route::get('/add-student-work/{student}', 'MainController@add_student_work')->name('add.student.work');
 
     Route::post('/insert-student-work/{student}', 'MainController@insert_student_work')->name('insert.student.work');
+});
+
+Route::prefix('users')->group(function() {
+    Route::get('/dashboard', 'UsersDashboardController@dashboard')->name('users.dashboard');
 });
