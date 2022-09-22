@@ -77,6 +77,7 @@
                                         <td>{{ $student->name }}</td>
                                         <td>
                                             <a href="{{ route('show.works', ['student' => $student->id]) }}" class="btn btn-primary">مشاهده کارها</a>
+                                            <a href="{{ route('edit.student', ['student' => $student->id]) }}" class="btn btn-warning" style="color: white;">ویرایش</a>
                                         </td>
                                     </tr>
                                 @endforeach

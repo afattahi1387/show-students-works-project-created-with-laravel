@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AddAndEditLessonSubjectRequest;
 use App\Http\Requests\AddStudentRequest;
 use App\Http\Requests\AddWorkReqeust;
+use App\Http\Requests\EditStudentRequest;
 use App\Http\Requests\UploadStudentImageRequest;
 use App\Works;
 
@@ -158,6 +159,34 @@ class MainController extends Controller
         ]);
 
         self::set_flash_message('success', 'دانش آموز شما با موفقیت اضافه شد.');
+        return redirect()->route('dashboard.students');
+    }
+
+    public function edit_student(User $student) {
+        return view('main_views.edit_student', ['student' => $student]);
+    }
+
+    public function update_student(User $student, EditStudentRequest $request) {
+        $studentName = $student->name;
+        if(isset($request->image) && !empty($request->image)) {
+            $imagePath = $request->image->path();
+            $imageName = $request->image->getClientOriginalName();
+            $imageNewName = $student->id . '_' . $imageName;
+            unlink('images/students_images/' . $student->image);
+            move_uploaded_file($imagePath, 'images/students_images/' . $imageName);
+            rename('images/students_images/' . $imageName, 'images/students_images/' . $imageNewName);
+        } else {
+            $imageNewName = $student->image;
+        }
+
+        $student->update([
+            'name' => $request->name,
+            'image' => $imageNewName,
+            'username' => $request->username,
+            'password' => bcrypt($request->password)
+        ]);
+
+        self::set_flash_message('success', 'دانش آموز با نام ' . $studentName . ' ویرایش شد.');
         return redirect()->route('dashboard.students');
     }
 }
