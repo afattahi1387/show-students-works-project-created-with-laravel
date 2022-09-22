@@ -20,7 +20,7 @@
                         مشاهده کارهای: {{ $student->name }}
                     </div>
                     <div class="card-body">
-                        <a href="#" class="btn btn-success" style="float: right;">ثبت کار جدید</a><br><br>
+                        <a href="{{ route('add.student.work', ['student' => $student->id]) }}" class="btn btn-success" style="float: right;">ثبت کار جدید</a><br><br>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>

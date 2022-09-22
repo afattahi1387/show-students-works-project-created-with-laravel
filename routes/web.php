@@ -33,4 +33,8 @@ Route::prefix('panel')->group(function() {
     Route::get('/students', 'MainController@students')->name('dashboard.students');
 
     Route::get('/show-works/{student}', 'MainController@show_works')->name('show.works');
+
+    Route::get('/add-student-work/{student}', 'MainController@add_student_work')->name('add.student.work');
+
+    Route::post('/insert-student-work/{student}', 'MainController@insert_student_work')->name('insert.student.work');
 });

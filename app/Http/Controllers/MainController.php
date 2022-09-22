@@ -6,6 +6,8 @@ use App\User;
 use App\LessonSubject;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddAndEditLessonSubjectRequest;
+use App\Http\Requests\AddWorkReqeust;
+use App\Works;
 
 class MainController extends Controller
 {
@@ -70,7 +72,54 @@ class MainController extends Controller
     }
 
     public function show_works(User $student) {
-        $works = $student->works;
+        $works = $student->works();
         return view('main_views.show_works', ['student' => $student, 'works' => $works, 'flashed_messages' => self::get_flashed_messages()]);
+    }
+
+    public function add_student_work(User $student) {
+        $lessons_subjects = LessonSubject::orderBy('id', 'DESC')->get();
+        return view('main_views.add_student_work', ['student' => $student, 'lessons_subjects' => $lessons_subjects]);
+    }
+
+    public function insert_student_work(User $student, AddWorkReqeust $request) {
+        if(isset($request->presence) && !empty($request->presence)) {
+            $presence = 1;
+        } else {
+            $presence = 0;
+        }
+
+        if(isset($request->home_work) && !empty($request->home_work)) {
+            $home_work = 1;
+        } else {
+            $home_work = 0;
+        }
+
+        if(isset($request->class_work) && !empty($request->class_work)) {
+            $class_work = 1;
+        } else {
+            $class_work = 0;
+        }
+
+        if(!empty($request->description)) {
+            $description = $request->description;
+        } else {
+            $description = null;
+        }
+
+        Works::create([
+            'lesson_subject_id' => $request->lesson_subject_id,
+            'user_id' => $student->id,
+            'presence' => $presence,
+            'home_work' => $home_work,
+            'class_work' => $class_work,
+            'score' => $request->score,
+            'description' => $description,
+            'day' => $request->day,
+            'month' => $request->month,
+            'year' => $request->year
+        ]);
+
+        self::set_flash_message('success', 'کار دانش آموز شما با موفقیت اضافه شد.');
+        return redirect()->route('show.works', ['student' => $student->id]);
     }
 }
