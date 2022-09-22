@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Works;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -28,6 +29,6 @@ class User extends Authenticatable
     ];
 
     public function works() {
-        return $this->hasMany(Works::class);
+        return Works::where('user_id', $this->id)->orderBy('id', 'DESC')->get();
     }
 }
