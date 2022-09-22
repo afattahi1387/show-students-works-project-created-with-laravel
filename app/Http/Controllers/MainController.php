@@ -6,6 +6,7 @@ use App\User;
 use App\LessonSubject;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddAndEditLessonSubjectRequest;
+use App\Http\Requests\AddStudentRequest;
 use App\Http\Requests\AddWorkReqeust;
 use App\Works;
 
@@ -121,5 +122,22 @@ class MainController extends Controller
 
         self::set_flash_message('success', 'کار دانش آموز شما با موفقیت اضافه شد.');
         return redirect()->route('show.works', ['student' => $student->id]);
+    }
+
+    public function add_student() {
+        return view('main_views.add_student');
+    }
+
+    public function insert_student(AddStudentRequest $request) {
+        $name = $request->name;
+        $username = $request->username;
+        $password = bcrypt($request->password);
+        User::create([
+            'name' => $name,
+            'username' => $username,
+            'password' => $password
+        ]);
+
+        return 'OK'; #Todo: change
     }
 }

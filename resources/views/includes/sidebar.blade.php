@@ -7,6 +7,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     داشبورد
                 </a>
+                <a class="nav-link" href="{{ route('add.student') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
+                    افزودن دانش آموز
+                </a>
                 <a class="nav-link" href="{{ route('dashboard.students') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-graduation-cap"></i></div>
                     دانش آموزان

@@ -45,6 +45,10 @@ Route::prefix('panel')->group(function() {
     Route::get('/add-student-work/{student}', 'MainController@add_student_work')->name('add.student.work');
 
     Route::post('/insert-student-work/{student}', 'MainController@insert_student_work')->name('insert.student.work');
+
+    Route::get('/add-student', 'MainController@add_student')->name('add.student');
+
+    Route::post('/insert-student', 'MainController@insert_student')->name('insert.student');
 });
 
 Route::prefix('users')->group(function() {

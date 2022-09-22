@@ -3,6 +3,7 @@
 return [
 
     'required' => 'فیلد :attribute الزامی است.',
+    'unique' => 'فیلد :attribute تکراری است. لطفا آن را عوض کنید.',
     
     'custom' => [
         'attribute-name' => [
@@ -11,7 +12,9 @@ return [
     ],
 
     'attributes' => [
+        'name' => 'نام دانش آموز',
         'email' => 'ایمیل',
+        'username' => 'نام کاربری',
         'password' => 'رمز عبور',
         'subject_name' => 'عنوان موضوع درس',
         'lesson_subject_id' => 'موضوع درس',
