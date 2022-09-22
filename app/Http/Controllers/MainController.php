@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AddAndEditLessonSubjectRequest;
 use App\Http\Requests\AddStudentRequest;
 use App\Http\Requests\AddWorkReqeust;
+use App\Http\Requests\UploadStudentImageRequest;
 use App\Works;
 
 class MainController extends Controller
@@ -132,12 +133,31 @@ class MainController extends Controller
         $name = $request->name;
         $username = $request->username;
         $password = bcrypt($request->password);
-        User::create([
+        $new_student = User::create([
             'name' => $name,
             'username' => $username,
-            'password' => $password
+            'password' => $password,
+            'image' => ''
         ]);
 
-        return 'OK'; #Todo: change
+        return redirect()->route('upload.student.image.form', ['student' => $new_student->id]);
+    }
+
+    public function upload_student_image_form(User $student) {
+        return view('main_views.upload_student_image', ['student' => $student]);
+    }
+
+    public function upload_student_image_post(User $student, UploadStudentImageRequest $request) {
+        $imagePath = $request->image->path();
+        $imageName = $request->image->getClientOriginalName();
+        $imageNewName = $student->id . '_' . $imageName;
+        move_uploaded_file($imagePath, 'images/students_images/' . $imageName);
+        rename('images/students_images/' . $imageName, 'images/students_images/' . $imageNewName);
+        $student->update([
+            'image' => $imageNewName
+        ]);
+
+        self::set_flash_message('success', 'دانش آموز شما با موفقیت اضافه شد.');
+        return redirect()->route('dashboard.students');
     }
 }

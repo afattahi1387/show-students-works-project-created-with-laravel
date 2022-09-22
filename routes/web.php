@@ -49,6 +49,10 @@ Route::prefix('panel')->group(function() {
     Route::get('/add-student', 'MainController@add_student')->name('add.student');
 
     Route::post('/insert-student', 'MainController@insert_student')->name('insert.student');
+
+    Route::get('/upload-student-image-form/{student}', 'MainController@upload_student_image_form')->name('upload.student.image.form');
+
+    Route::post('/upload-student-image-post/{student}', 'MainController@upload_student_image_post')->name('upload.student.image.post');
 });
 
 Route::prefix('users')->group(function() {
