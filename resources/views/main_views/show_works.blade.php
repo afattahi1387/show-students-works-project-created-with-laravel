@@ -10,7 +10,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <img src="{{ asset('images/students_images/' . $student->image) }}" style="width: 100px; height: 100px; border: none; border-radius: 100px; float: right;">
+                <img src="{{ asset('images/students_images/' . $student->image) }}" alt="تصویری به نمایش در نیامد." style="width: 100px; height: 100px; border: none; border-radius: 100px; float: right;">
                 <h1 class="mt-4">مشاهده کارها</h1>
                 <br><br>
                 @foreach($flashed_messages as $message_type => $message_text)
