@@ -17,15 +17,14 @@
                         آپلود تصویر برای: {{ $student->name }}
                     </div>
                     <div class="card-body" style="direction: rtl;">
+                        @if($errors->has('image'))
+                            <div class="alert alert-danger">{{ $errors->first('image') }}</div>
+                        @endif
                         <form action="{{ route('upload.student.image.post', ['student' => $student->id]) }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="mb-3">
                                 <label for="image" class="form-label">لطفا تصویر خود را با استفاده از کادر زیر آپلود کنید:</label>
-                                <input type="file" name="image" id="image" class="form-control">
-                                @if($errors->has('image'))
-                                    <span class="text-danger">{{ $errors->first('image') }}</span><br>
-                                @endif
-                                <br>
+                                <input type="file" name="image" id="image" class="form-control"><br>
                                 <input type="submit" value="تایید" class="btn btn-success">
                             </div>
                         </form>
