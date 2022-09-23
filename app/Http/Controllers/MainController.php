@@ -245,4 +245,11 @@ class MainController extends Controller
 
         return redirect()->route('show.works', ['student' => $work->user_id]);
     }
+
+    public function delete_student_work(Works $work) {
+        $student_id = $work->user_id;
+        $work->delete();
+        self::set_flash_message('success', 'کار دانش آموز با موفقیت حذف شد.');
+        return redirect()->route('show.works', ['student' => $student_id]);
+    }
 }

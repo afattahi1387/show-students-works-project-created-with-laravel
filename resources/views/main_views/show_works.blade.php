@@ -44,7 +44,14 @@
                                         <td>{{ $work->score }}</td>
                                         <td>{{ $work->year }} / @if($work->month < 10)0{{ $work->month }}@else{{ $work->month }}@endif / @if($work->day < 10)0{{ $work->day }}@else{{ $work->day }}@endif</td>
                                         <td>
-                                            <a href="{{ route('edit.student.work', ['work' => $work->id]) }}" class="btn btn-warning" style="color: white;">ویرایش</a>
+                                            <div class="d-flex">
+                                                <a href="{{ route('edit.student.work', ['work' => $work->id]) }}" class="btn btn-warning" style="color: white; margin-right: 3px;">ویرایش</a>
+                                                <form action="{{ route('delete.student.work', ['work' => $work->id]) }}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    <button class="btn btn-danger" onclick="if(confirm('آیا از حذف این کار دانش آموز مطمئن هستید؟')){return true;}else{return false;}">حذف</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

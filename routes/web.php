@@ -63,6 +63,8 @@ Route::prefix('panel')->group(function() {
     Route::get('/edit-student-work/{work}', 'MainController@edit_student_work')->name('edit.student.work');
 
     Route::put('/update-student-work/{work}', 'MainController@update_student_work')->name('update.student.work');
+
+    Route::delete('/delete-student-work/{work}', 'MainController@delete_student_work')->name('delete.student.work');
 });
 
 Route::prefix('users')->group(function() {
