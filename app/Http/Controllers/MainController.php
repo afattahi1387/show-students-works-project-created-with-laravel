@@ -36,6 +36,10 @@ class MainController extends Controller
     }
 
     public function home() {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $lessons_subjects = LessonSubject::orderBy('id', 'DESC')->get();
         if(isset($_GET['edit-lesson-subject']) && !empty($_GET['edit-lesson-subject'])) {
             $edit_form_subject_name = LessonSubject::where('id', $_GET['edit-lesson-subject'])->get()[0]['subject_name'];
@@ -46,6 +50,10 @@ class MainController extends Controller
     }
 
     public function create_lesson_subject(AddAndEditLessonSubjectRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         LessonSubject::create([
             'subject_name' => $request->subject_name
         ]);
@@ -55,6 +63,10 @@ class MainController extends Controller
     }
 
     public function delete_lesson_subject(LessonSubject $subject) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         if($subject->count_works() > 1) {
             self::set_flash_message('danger', 'این موضوع درس دارای کار دانش آموزان است و نمی توانید آن را حذف کنید.');
             return redirect()->route('home');
@@ -65,6 +77,10 @@ class MainController extends Controller
     }
 
     public function update_lesson_subject(LessonSubject $subject, AddAndEditLessonSubjectRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $old_subject_name = $subject->subject_name;
         $subject->update([
             'subject_name' => $request->subject_name
@@ -75,21 +91,37 @@ class MainController extends Controller
     }
 
     public function students() {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $students = User::where('type', 'user')->orderBy('id', 'DESC')->get();
         return view('main_views.students', ['students' => $students, 'flashed_messages' => self::get_flashed_messages()]);
     }
 
     public function show_works(User $student) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $works = $student->works();
         return view('main_views.show_works', ['student' => $student, 'works' => $works, 'flashed_messages' => self::get_flashed_messages()]);
     }
 
     public function add_student_work(User $student) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $lessons_subjects = LessonSubject::orderBy('id', 'DESC')->get();
         return view('main_views.add_student_work', ['student' => $student, 'lessons_subjects' => $lessons_subjects]);
     }
 
     public function insert_student_work(User $student, AddWorkReqeust $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         if(isset($request->presence) && !empty($request->presence)) {
             $presence = 1;
         } else {
@@ -132,10 +164,18 @@ class MainController extends Controller
     }
 
     public function add_student() {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         return view('main_views.add_student');
     }
 
     public function insert_student(AddStudentRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $name = $request->name;
         $username = $request->username;
         $password = bcrypt($request->password);
@@ -150,10 +190,18 @@ class MainController extends Controller
     }
 
     public function upload_student_image_form(User $student) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         return view('main_views.upload_student_image', ['student' => $student]);
     }
 
     public function upload_student_image_post(User $student, UploadStudentImageRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $imagePath = $request->image->path();
         $imageName = $request->image->getClientOriginalName();
         $imageNewName = $student->id . '_' . $imageName;
@@ -168,10 +216,18 @@ class MainController extends Controller
     }
 
     public function edit_student(User $student) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         return view('main_views.edit_student', ['student' => $student]);
     }
 
     public function update_student(User $student, EditStudentRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $studentName = $student->name;
         if(isset($request->image) && !empty($request->image)) {
             $imagePath = $request->image->path();
@@ -196,6 +252,10 @@ class MainController extends Controller
     }
 
     public function delete_student(User $student) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         if($student->count_works() > 1) {
             self::set_flash_message('danger', 'این دانش آموز دارای کار دانش آموز است و نمی توان آن را حذف کرد.');
             return redirect()->route('dashboard.students');
@@ -208,11 +268,19 @@ class MainController extends Controller
     }
 
     public function edit_student_work(Works $work) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $lessons_subjects = LessonSubject::orderBy('id','DESC')->get();
         return view('main_views.edit_student_work', ['work' => $work, 'lessons_subjects' => $lessons_subjects]);
     }
 
     public function update_student_work(Works $work, EditStudentWorkRequest $request) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         if(isset($request->presence) && !empty($request->presence)) {
             $presence = 1;
         } else {
@@ -247,6 +315,10 @@ class MainController extends Controller
     }
 
     public function delete_student_work(Works $work) {
+        if(auth()->user()->type == 'user') {
+            return redirect()->route('users.dashboard');
+        }
+
         $student_id = $work->user_id;
         $work->delete();
         self::set_flash_message('success', 'کار دانش آموز با موفقیت حذف شد.');
