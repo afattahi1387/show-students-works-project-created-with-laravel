@@ -76,8 +76,17 @@
                                         <td>@php echo ++$studentsCounter; @endphp</td>
                                         <td>{{ $student->name }}</td>
                                         <td>
-                                            <a href="{{ route('show.works', ['student' => $student->id]) }}" class="btn btn-primary">مشاهده کارها</a>
-                                            <a href="{{ route('edit.student', ['student' => $student->id]) }}" class="btn btn-warning" style="color: white;">ویرایش</a>
+                                            <div class="d-flex">
+                                                <a href="{{ route('show.works', ['student' => $student->id]) }}" class="btn btn-primary" style="margin-right: 3px;">مشاهده کارها</a>
+                                                <a href="{{ route('edit.student', ['student' => $student->id]) }}" class="btn btn-warning" style="color: white; margin-right: 3px;">ویرایش</a>
+                                                @if($student->count_works() < 1)
+                                                    <form action="{{ route('delete.student', ['student' => $student->id]) }}" method="POST">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="_method" value="delete">
+                                                        <button class="btn btn-danger" onclick="if(confirm('آیا از حذف این دانش آموز مطمئن هستید؟')){return true;}else{return false;}">حذف</button>
+                                                    </form>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

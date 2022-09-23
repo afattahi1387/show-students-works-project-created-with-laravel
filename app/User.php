@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function works() {
         return Works::where('user_id', $this->id)->orderBy('id', 'DESC')->get();
     }
+
+    public function count_works() {
+        return self::works()->count();
+    }
 }

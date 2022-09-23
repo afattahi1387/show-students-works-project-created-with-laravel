@@ -195,6 +195,18 @@ class MainController extends Controller
         return redirect()->route('dashboard.students');
     }
 
+    public function delete_student(User $student) {
+        if($student->count_works() > 1) {
+            self::set_flash_message('danger', 'این دانش آموز دارای کار دانش آموز است و نمی توان آن را حذف کرد.');
+            return redirect()->route('dashboard.students');
+        }
+
+        unlink('images/students_images/' . $student->image);
+        $student->delete();
+        self::set_flash_message('success', 'دانش آموز شما با موفقیت حذف شد.');
+        return redirect()->route('dashboard.students');
+    }
+
     public function edit_student_work(Works $work) {
         $lessons_subjects = LessonSubject::orderBy('id','DESC')->get();
         return view('main_views.edit_student_work', ['work' => $work, 'lessons_subjects' => $lessons_subjects]);
