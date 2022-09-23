@@ -55,6 +55,10 @@ class MainController extends Controller
     }
 
     public function delete_lesson_subject(LessonSubject $subject) {
+        if($subject->count_works() > 1) {
+            self::set_flash_message('danger', 'این موضوع درس دارای کار دانش آموزان است و نمی توانید آن را حذف کنید.');
+            return redirect()->route('home');
+        }
         $subject->delete();
         self::set_flash_message('success', 'موضوع درس شما با موفقیت حذف شد.');
         return redirect()->route('home');

@@ -74,11 +74,13 @@
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('home') }}?edit-lesson-subject={{ $lesson_subject->id }}" class="btn btn-warning" style="color: white; margin-right: 3px;">ویرایش</a>
-                                                <form action="{{ route('delete.lesson.subject', ['subject' => $lesson_subject->id]) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" name="_method" value="delete">
-                                                    <button class="btn btn-danger" onclick="if(confirm('آیا از حذف این موضوع درس مطمئن هستید؟')){return true;}else{return false;}">حذف</button>
-                                                </form>
+                                                @if($lesson_subject->count_works() < 1)
+                                                    <form action="{{ route('delete.lesson.subject', ['subject' => $lesson_subject->id]) }}" method="POST">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="_method" value="delete">
+                                                        <button class="btn btn-danger" onclick="if(confirm('آیا از حذف این موضوع درس مطمئن هستید؟')){return true;}else{return false;}">حذف</button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
