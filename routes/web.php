@@ -57,6 +57,10 @@ Route::prefix('panel')->group(function() {
     Route::get('/edit-student/{student}', 'MainController@edit_student')->name('edit.student');
 
     Route::put('/update-student/{student}', 'MainController@update_student')->name('update.student');
+
+    Route::get('/edit-student-work/{work}', 'MainController@edit_student_work')->name('edit.student.work');
+
+    Route::put('/update-student-work/{work}', 'MainController@update_student_work')->name('update.student.work');
 });
 
 Route::prefix('users')->group(function() {

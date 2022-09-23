@@ -9,6 +9,7 @@ use App\Http\Requests\AddAndEditLessonSubjectRequest;
 use App\Http\Requests\AddStudentRequest;
 use App\Http\Requests\AddWorkReqeust;
 use App\Http\Requests\EditStudentRequest;
+use App\Http\Requests\EditStudentWorkRequest;
 use App\Http\Requests\UploadStudentImageRequest;
 use App\Works;
 
@@ -188,5 +189,44 @@ class MainController extends Controller
 
         self::set_flash_message('success', 'دانش آموز با نام ' . $studentName . ' ویرایش شد.');
         return redirect()->route('dashboard.students');
+    }
+
+    public function edit_student_work(Works $work) {
+        $lessons_subjects = LessonSubject::orderBy('id','DESC')->get();
+        return view('main_views.edit_student_work', ['work' => $work, 'lessons_subjects' => $lessons_subjects]);
+    }
+
+    public function update_student_work(Works $work, EditStudentWorkRequest $request) {
+        if(isset($request->presence) && !empty($request->presence)) {
+            $presence = 1;
+        } else {
+            $presence = 0;
+        }
+
+        if(isset($request->home_work) && !empty($request->home_work)) {
+            $home_work = 1;
+        } else {
+            $home_work = 0;
+        }
+
+        if(isset($request->class_work) && !empty($request->class_work)) {
+            $class_work = 1;
+        } else {
+            $class_work = 0;
+        }
+
+        $work->update([
+            'lesson_subject_id' => $request->lesson_subject_id,
+            'presence' => $presence,
+            'home_work' => $home_work,
+            'class_work' => $class_work,
+            'score' => $request->score,
+            'description' => $request->description,
+            'day' => $request->day,
+            'month' => $request->month,
+            'year' => $request->year
+        ]);
+
+        return redirect()->route('show.works', ['student' => $work->user_id]);
     }
 }

@@ -44,7 +44,7 @@
                                         <td>{{ $work->score }}</td>
                                         <td>{{ $work->year }} / @if($work->month < 10)0{{ $work->month }}@else{{ $work->month }}@endif / @if($work->day < 10)0{{ $work->day }}@else{{ $work->day }}@endif</td>
                                         <td>
-                                            <a href="#" class="btn btn-warning" style="color: white;">ویرایش</a>
+                                            <a href="{{ route('edit.student.work', ['work' => $work->id]) }}" class="btn btn-warning" style="color: white;">ویرایش</a>
                                         </td>
                                     </tr>
                                 @endforeach
